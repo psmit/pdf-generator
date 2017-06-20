@@ -6,6 +6,8 @@ import re
 import tempfile
 
 import time
+
+import shutil
 from rtmbot.core import Plugin
 
 from rq import Queue
@@ -27,6 +29,7 @@ def make_github_attachment(slack_token, channel, user, repo, tree):
     for file in os.listdir(os.path.join(dir, 'build')):
         if file.endswith(".pdf"):
             returns.append(sc.api_call("files.upload", filename=file, channels=channel, file=open(os.path.join(dir, 'build', file), 'rb') ))
+    shutil.rmtree(dir)
     return returns
 
 
